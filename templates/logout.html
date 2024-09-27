@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = "{{ url_for('login')}}";
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Logging Out...</h2>
+        <script>
+            // Call the logout function
+            logout();
+        </script>
+    </div>
+</body>
+</html>
