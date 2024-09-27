@@ -25,11 +25,11 @@ app.config['SECRET_KEY'] = 'SECRET_KEY'
 app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(basedir, 'static/images')
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'olamicreas@gmail.com'
-app.config['MAIL_PASSWORD'] = 'smtpp'
+app.config['MAIL_USERNAME'] = 'druryd446@gmail.com'
+app.config['MAIL_PASSWORD'] = 'tefkpiydouwrbiph'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_DEFAULT_SENDER'] = 'olamicreas@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'druryd446@gmail.com'
 mail = Mail(app)
 
 
