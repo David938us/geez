@@ -73,6 +73,7 @@ function displayTransactionHistory(transactions) {
             <p>Type: ${transaction.type}</p>
             <p>Date: ${new Date(transaction.date).toLocaleString()}</p>
             <p>Status: ${transaction.status}</p>
+            <hr>
         `;
         historyContainer.appendChild(transactionElement);
     });
