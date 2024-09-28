@@ -154,6 +154,7 @@
             <form id="loginFormElement">
                 <input type="email" id="loginEmail" placeholder="Email" required>
                 <input type="password" id="loginPassword" placeholder="Password" required>
+                 <input type="text" id="loginUID" placeholder="User ID" required>
                 <button type="submit">Login</button>
             </form>
             <div class="toggle-container signup-toggle" onclick="toggleForm('signup')">
@@ -254,18 +255,33 @@
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
+            const uid = document.getElementById('loginUID').value;
+        
             try {
                 // Sign in user with Firebase Authentication
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-
-                alert('Login successful');
-                window.location.href = '/'
-                // Redirect or perform other actions after login
+        
+                if (user.uid.slice(0, 5) === uid) {
+                    alert('Login successful');
+                    window.location.href = '/';
+                } else {
+                    throw new Error('UID does not match');
+                }
             } catch (error) {
                 console.error('Error signing in:', error);
-                alert('Error: ' + error.message);
+                let errorMessage;
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No user found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password.';
+                        break;
+                    default:
+                        errorMessage = error.message;
+                }
+                alert('Error: ' + errorMessage);
             }
         });
     </script>
