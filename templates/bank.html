@@ -209,7 +209,7 @@
                 const userRef = doc(db, 'users', currentUser.uid);
 
                 // Use merge option to add the transaction without overwriting existing data
-                setDoc(userRef, { transactions: arrayUnion(senderTransaction) }, { merge: true })
+                await setDoc(userRef, { transactions: arrayUnion(senderTransaction) }, { merge: true })
                     .then(() => {
                         alert('Transaction recorded successfully.');
                     })
