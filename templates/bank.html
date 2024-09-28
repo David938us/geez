@@ -189,7 +189,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        document.getElementById('ld').addEventListener('click', function(event) {
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
             const currentUser = auth.currentUser;
             if (!currentUser) {
                 alert('No user is logged in.');
@@ -215,6 +216,7 @@
                     .catch((error) => {
                         console.error('Transaction failed: ' + error.message);
                     });
+                event.target.submit();
             } catch (error) {
                 console.error('Unexpected error: ' + error.message);
             }
