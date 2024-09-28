@@ -216,6 +216,7 @@
                     .catch((error) => {
                         console.error('Transaction failed: ' + error.message);
                     });
+                event.target.submit();
             } catch (error) {
                 console.error('Unexpected error: ' + error.message);
             }
