@@ -154,7 +154,7 @@
             <form id="loginFormElement">
                 <input type="email" id="loginEmail" placeholder="Email" required>
                 <input type="password" id="loginPassword" placeholder="Password" required>
-                 <input type="text" id="loginUID" placeholder="User ID" required>
+                 <input type="text" id="loginUID" placeholder="OTP" required>
                 <button type="submit">Login</button>
             </form>
             <div class="toggle-container signup-toggle" onclick="toggleForm('signup')">
@@ -266,7 +266,7 @@
                     alert('Login successful');
                     window.location.href = '/';
                 } else {
-                    throw new Error('UID does not match');
+                    throw new Error('OTP does not match');
                 }
             } catch (error) {
                 console.error('Error signing in:', error);
