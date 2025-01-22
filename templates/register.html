@@ -173,7 +173,9 @@
                 <input type="email" id="registerEmail" placeholder="Email" required>
                 <input type="password" id="registerPassword" placeholder="Password" required>
                 <input type="text" id="registerAddress" placeholder="Address" required>
-                <input type="date" id="registerDOB" placeholder="Date of Birth" required>
+                <input type="text" id="registerDOB" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                <input type="tel" placeholder="Input Phone Number" id="registerNumber" required>
+                   
                 <input type="text" id="registerPhone" placeholder="Last 4 Digits of SSN" maxlength="4" required>
                 <button type="submit">Sign Up</button>
             </form>
@@ -239,6 +241,7 @@
             const address = document.getElementById('registerAddress').value;
             const dob = document.getElementById('registerDOB').value;
             const phone = document.getElementById('registerPhone').value;
+            const number = document.getElementById('registerNumber').value;
         
             try {
                 // Create user with Firebase Authentication
@@ -253,6 +256,7 @@
                     address,
                     dob,
                     phone,
+                    number,
                     transactions: []
                 });
         
