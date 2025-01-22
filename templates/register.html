@@ -163,6 +163,8 @@
         </div>
 
         <!-- Signup Form -->
+
+
         <div id="signupForm" class="form-container signup">
             <h2 style="text-align: center; margin-bottom: 20px;">Sign Up</h2>
             <form id="signupFormElement">
@@ -170,13 +172,17 @@
                 <input type="text" id="registerLastName" placeholder="Last Name" required>
                 <input type="email" id="registerEmail" placeholder="Email" required>
                 <input type="password" id="registerPassword" placeholder="Password" required>
+                <input type="text" id="registerAddress" placeholder="Address" required>
+                <input type="date" id="registerDOB" placeholder="Date of Birth" required>
+                <input type="text" id="registerPhone" placeholder="Last 4 Digits of Phone Number" maxlength="4" required>
                 <button type="submit">Sign Up</button>
             </form>
             <div class="toggle-container" onclick="toggleForm('login')">
                 <i class="fas fa-sign-in-alt"></i> Already have an account? Login
             </div>
         </div>
-    </div>
+
+
 
     <!-- JavaScript to Toggle Forms -->
     <script>
@@ -221,34 +227,43 @@
         const db = getFirestore(app);
 
         // Signup Form Handling
+        // Signup Form Handling
         document.getElementById('signupFormElement').addEventListener('submit', async (e) => {
             e.preventDefault();
+        
+            // Get the values of the new form fields
             const firstName = document.getElementById('registerFirstName').value;
             const lastName = document.getElementById('registerLastName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
-
+            const address = document.getElementById('registerAddress').value;
+            const dob = document.getElementById('registerDOB').value;
+            const phone = document.getElementById('registerPhone').value;
+        
             try {
                 // Create user with Firebase Authentication
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                
                 const user = userCredential.user;
-                
+        
                 // Save user details to Firestore
                 await setDoc(doc(db, 'users', user.uid), {
                     firstName,
                     lastName,
                     email,
+                    address,
+                    dob,
+                    phone,
                     transactions: []
                 });
+        
                 alert('Registration successful');
-                toggleForm('login');
-                 // Switch to login form after registration
+                toggleForm('login'); // Switch to login form after registration
             } catch (error) {
                 console.error('Error registering user:', error);
                 alert('Error: ' + error.message);
             }
         });
+
 
         // Login Form Handling
         document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
