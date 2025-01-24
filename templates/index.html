@@ -769,6 +769,8 @@
           
         </div>
         <!-- Transfer Modal -->
+      <div id="accountsContainer"></div>
+
         <div id="transferModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -778,15 +780,7 @@
             </div>
         </div>
 
-        <div class="bottom-nav">
-            <a href="#" class="active account"><i class="fas fa-home"></i> Accounts</a>
-            <a href="#" class="transfer-btn-sidebar"><i class="fas fa-exchange-alt" ></i> Transfer</a>
-           
-            <a href="#" id="menu-btn"><i class="fas fa-bars"></i> Menu</a>
-            <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
-                <a href="#" id="logout-link">Logout</a>
-            </div>
-        </div>
+         
             <!-- Logout Confirmation Modal -->
     <div id="logout-modal" class="modal">
         <div class="modal-content">
@@ -795,19 +789,33 @@
             <button class="modal-btn" id="confirm-logout">Confirm Logout</button>
         </div>
     </div>
+
+    <!-- Accounts Modal -->
+    <div id="accountsModal" style="display:none;">
+        <div class="modal-content">
+            <span id="closeAccountsModal" class="close">&times;</span>
+            <h2>Created Accounts</h2>
+            <div id="accountsList"></div> <!-- This is where the list of accounts will be displayed -->
+        </div>
+    </div>
+
     <!-- Credit Score Modal -->
     <div id="creditScoreModal" class="modal">
         <div class="modal-content">
-            <canvas id="creditScoreModalChart" width="400" height="200"></canvas>
-            <button id="closeCreditScoreModal">Close</button>
+            <span id="closeCreditScoreModal" class="close">&times;</span>
+            <h2>Credit Score Over Time</h2>
+            <canvas id="creditScoreChart" width="400" height="200"></canvas>
         </div>
     </div>
     
+    <!-- Spending Analysis Modal -->
     <div id="spendingModal" class="modal">
         <div class="modal-content">
-            <canvas id="spendingModalChart" width="400" height="200"></canvas>
-            <button id="closeSpendingModal">Close</button>
+            <span id="closeSpendingModal" class="close">&times;</span>
+            <h2>Spending Analysis Over Time</h2>
+            <canvas id="spendingChart" width="400" height="200"></canvas>
         </div>
+    </div>
     </div>
 
     </div>
