@@ -325,6 +325,251 @@
 .menu-dropdown a:hover {
     background-color: #f1f1f1;
 }
+#largeScreen{
+    display: none;
+}
+
+@media screen and (min-width: 1200px) {
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f0f4f8, #dfe7ef); /* Soft gradient background */
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden; /* Prevent scrolling */
+    }
+
+    /* Dashboard Container */
+    .dashboard-container,#largeScreen {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 20px;
+        width: 95%;
+        max-width: 1400px;
+        margin: 50px auto;
+        height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 100%; /* Match full container height */
+        position: sticky;
+        top: 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .sidebar .logo {
+        font-size: 20px;
+        font-weight: bold;
+        color: #4a90e2;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar .logo:hover {
+        transform: scale(1.1);
+    }
+
+    .sidebar ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sidebar ul li {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #666;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
+        transition: background 0.3s, color 0.3s, transform 0.3s ease;
+    }
+
+    .sidebar ul li:hover {
+        background: #f0f0f0;
+        color: #333;
+        transform: translateX(10px); /* Slight movement effect */
+    }
+
+    .sidebar ul li.active {
+        background: #4a90e2;
+        color: #fff;
+    }
+
+    /* Header */
+    .header {
+        grid-column: span 2;
+        padding: 15px;
+        border-radius: 15px;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1.5s ease-in-out; /* Fade in effect */
+    }
+
+    .header .welcome-message {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .header .actions button {
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #4a90e2, #76b8f2);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .header .actions button:hover {
+        background: linear-gradient(90deg, #76b8f2, #4a90e2);
+        transform: translateY(-5px); /* Hover effect to raise the button */
+    }
+
+    /* Main Content */
+    .main-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Deeper shadow for depth */
+        position: relative;
+        overflow: hidden;
+        animation: cardFadeIn 1s ease-in-out; /* Animation for cards */
+    }
+    .card:nth-child(1) {
+    background: linear-gradient(135deg, #4b4f54, #6c757d); /* Charcoal to Slate Gray */
+    color: #fff; /* White text for contrast */
+}
+
+.card:nth-child(2) {
+    background: linear-gradient(135deg, #a6a7aa, #c4c7cc); /* Ash Gray to Light Silver */
+    color: #333; /* Dark gray text for readability */
+}
+
+
+
+    .card h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .card .amount {
+        font-size: 36px;
+        font-weight: bold;
+        color: #4a90e2;
+    }
+
+    .card .chart {
+        height: 120px;
+        background: linear-gradient(90deg, #4a90e2, #76b8f2);
+        border-radius: 10px;
+        margin-top: 20px;
+        animation: chartPulse 2s infinite ease-in-out; /* Pulse animation for chart */
+    }
+
+    /* Transactions */
+    .transactions {
+        grid-column: span 2;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .transactions .transaction {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #f0f0f0;
+        transition: transform 0.3s, background 0.3s, box-shadow 0.3s ease;
+    }
+.smallScreen{
+    display: none;
+}
+    .transactions .transaction:hover {
+        transform: scale(1.02);
+        background-color: #e0e0e0;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+    }
+
+    .transactions .transaction .details {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .transactions .transaction .details img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .transactions .transaction .amount {
+        font-weight: bold;
+        color: #4a90e2;
+    }
+
+    .transactions .transaction.negative .amount {
+        color: #e74c3c;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes cardFadeIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes chartPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+}
+
+
+
 
     </style>
 </head>
@@ -332,7 +577,100 @@
     <div class="landing-feature">
         <h1 style="text-align: center;">Welcome to BlackRockTrust</h1>
     </div>
-    <div class="dashboard-container">
+   
+    <div class="dashboard-container" id="largeScreen">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">BlackRockTrust</div>
+            <ul>
+                <li class="active">Dashboard</li>
+                <li>Accounts</li>
+                <li class="transfer-btn-sidebar">Transfer</li>
+              
+                <li id="logout-link">Logout</li>
+            </ul>
+        </aside>
+        
+        
+    
+        <!-- Main Content -->
+        <section class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="welcome-message">
+                    <i class="fas fa-user-circle"></i> Welcome, <span id="usernameDisplay">User</span>
+                </div>
+                <div class="actions">
+                    <button class="btn-new">+ New</button>
+                </div>
+            </div>
+    
+            <!-- Card 1 -->
+            <div class="card">
+                <h2>Cash Accounts</h2>
+                <div class="balance price amount" id=""><span id="balance">$0</span></div>
+                <div class="chart" id="contributionChart">
+                    <canvas id="creditScoreChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card">
+                <h2>MyLifeChecking</h2>
+                <div class="amount balance">
+                    <span id="balancee">$0</span>
+                </div>
+                <div class="chart" id="requiredFundChart"><canvas id="spendingChart" width="400" height="200"></canvas></div>
+            </div>
+    
+            <!-- Transactions -->
+            <div class="transactions">
+                <h3>Recent Transactions</h3>
+                <div class="transaction">
+                    <div class="title" id="transactionHistory"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="transferModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Select Login Type</h2>
+                <button class="modal-btn" id="retirementLogin" onclick="ld('retirementLogin');">Retirement Login</button>
+                <button class="modal-btn" id="bankLogin" onclick="ld('bankLogin');">Bank Login</button>
+            </div>
+        </div>
+
+         
+            <!-- Logout Confirmation Modal -->
+    <div id="logout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn close" id="close-modal">&times;</span>
+            <p>Are you sure you want to logout?</p>
+            <button class="modal-btn" id="confirm-logout">Confirm Logout</button>
+        </div>
+    </div>
+    <!-- Credit Score Modal -->
+    <div id="creditScoreModal" class="modal">
+        <div class="modal-content">
+            <span id="closeCreditScoreModal" class="close">&times;</span>
+            <h2>Credit Score Over Time</h2>
+            <canvas id="creditScoreChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    
+    <!-- Spending Analysis Modal -->
+    <div id="spendingModal" class="modal">
+        <div class="modal-content">
+            <span id="closeSpendingModal" class="close">&times;</span>
+            <h2>Spending Analysis Over Time</h2>
+            <canvas id="spendingChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    </div>
+    
+    
+    <div class="dashboard-container smallScreen">
         <div class="header">
             <div class="welcome-message">
                 <i class="fas fa-user-circle"></i> Welcome, <span id="usernameDisplay">User</span>
@@ -390,7 +728,8 @@
 
         <div class="bottom-nav">
             <a href="#" class="active"><i class="fas fa-home"></i> Accounts</a>
-            <a href="#"><i class="fas fa-exchange-alt"></i> Transfer</a>
+            <a href="#" class="transfer-btn-sidebar"><i class="fas fa-exchange-alt" ></i> Transfer</a>
+           
             <a href="#" id="menu-btn"><i class="fas fa-bars"></i> Menu</a>
             <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
                 <a href="#" id="logout-link">Logout</a>
@@ -467,31 +806,35 @@
             }
         });
         // Get the modal
-        var modal = document.getElementById("transferModal");
+// Select all elements with the class "transfer-btn-sidebar"
+var transferBtns = document.querySelectorAll(".transfer-btn-sidebar");
 
-        // Get the button that opens the modal
-        var transferBtn = document.querySelector(".bottom-nav a:nth-child(2)");
+// Get the modal element
+var modal = document.getElementById("transferModal");
 
-        // Get the <span> element that closes the modal
-        var closeBtn = document.getElementsByClassName("close")[0];
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("close")[0];
 
-        // When the user clicks on the button, open the modal
-        transferBtn.onclick = function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            modal.style.display = "block";
-        }
+// Loop through each "transfer-btn-sidebar" and attach click event
+transferBtns.forEach(function(transferBtn) {
+    transferBtn.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default behavior
+        modal.style.display = "block"; // Show the modal
+    });
+});
 
-        // When the user clicks on <span> (x), close the modal
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
+// When the user clicks on <span> (x), close the modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+};
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
 
         // Optionally, handle modal button clicks
     
