@@ -183,9 +183,12 @@ function setupSideNav() {
 }
 
 // Handle account fetching
+// Function to fetch and display accounts in a modal
 async function fetchAccounts() {
     const currentUser = auth.currentUser;
-    if (!currentUser) return;
+    if (!currentUser) {
+        return;
+    }
 
     const userRef = doc(db, 'users', currentUser.uid);
     const docSnap = await getDoc(userRef);
@@ -193,8 +196,11 @@ async function fetchAccounts() {
     if (docSnap.exists()) {
         const userData = docSnap.data();
         const accounts = userData.accounts || [];
-        const accountsContainer = document.getElementById('accountsContainer');
-        accountsContainer.innerHTML = '';
+
+        // Create a modal to display accounts
+        const accountsModal = document.getElementById('accountsModal');
+        const accountsList = document.getElementById('accountsList');
+        accountsList.innerHTML = ''; // Clear any previous content
 
         accounts.forEach(account => {
             const accountElement = document.createElement('div');
@@ -204,12 +210,30 @@ async function fetchAccounts() {
                 <p>Balance: $${account.balance.toFixed(2)}</p>
                 <hr>
             `;
-            accountsContainer.appendChild(accountElement);
+            accountsList.appendChild(accountElement);
         });
+
+        // Show the accounts modal
+        accountsModal.style.display = 'block';
     } else {
-        console.error('User accounts not found');
+        console.error('User data not found for accounts');
     }
 }
+
+// Add click event to any element with class 'account' to show the accounts modal
+const accountElements = document.querySelectorAll('.account');
+accountElements.forEach(element => {
+    element.addEventListener('click', fetchAccounts);
+});
+
+// Close accounts modal functionality
+const closeAccountsModal = document.getElementById('closeAccountsModal');
+if (closeAccountsModal) {
+    closeAccountsModal.addEventListener('click', () => {
+        document.getElementById('accountsModal').style.display = 'none';
+    });
+}
+
 
 // Initialize onAuthStateChanged
 onAuthStateChanged(auth, async (user) => {
