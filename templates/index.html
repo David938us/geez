@@ -404,6 +404,24 @@
             <button class="modal-btn" id="confirm-logout">Confirm Logout</button>
         </div>
     </div>
+    <!-- Credit Score Modal -->
+    <div id="creditScoreModal" class="modal">
+        <div class="modal-content">
+            <span id="closeCreditScoreModal" class="close">&times;</span>
+            <h2>Credit Score Over Time</h2>
+            <canvas id="creditScoreChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    
+    <!-- Spending Analysis Modal -->
+    <div id="spendingModal" class="modal">
+        <div class="modal-content">
+            <span id="closeSpendingModal" class="close">&times;</span>
+            <h2>Spending Analysis Over Time</h2>
+            <canvas id="spendingChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
     </div>
     <script type="module" src="{{ url_for('static', filename='script.js') }}" defer></script>
 
