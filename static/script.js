@@ -341,8 +341,12 @@ if (spendingChartElement) {
 }
 
 // Display Credit Score Modal
-const creditScoreElement = document.querySelectorAll('.creditArrow');
-creditScoreElement.forEach(element => {
+// Keep references to the chart instances
+let creditScoreChartInstance = null;
+let spendingChartInstance = null;
+
+// Credit Score Chart Display
+document.querySelectorAll('.creditArrow').forEach(element => {
     element.addEventListener('click', async () => {
         const currentUser = auth.currentUser;
         if (!currentUser) {
@@ -357,22 +361,27 @@ creditScoreElement.forEach(element => {
             const userData = docSnap.data();
             const creditScore = userData.creditScore || [700, 710, 720, 730, 740]; // Default example data
 
-            const creditScoreModalChart = document.getElementById('creditScoreModalChart');
-            if (creditScoreModalChart) {
-                const ctx = creditScoreModalChart.getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                        datasets: [{
-                            label: 'Credit Score',
-                            data: creditScore,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            fill: false
-                        }]
-                    }
-                });
+            const creditScoreChartElement = document.getElementById('creditScoreModalChart');
+
+            // Destroy the existing chart if it exists
+            if (creditScoreChartInstance) {
+                creditScoreChartInstance.destroy();
             }
+
+            // Create a new chart
+            const ctx = creditScoreChartElement.getContext('2d');
+            creditScoreChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Credit Score',
+                        data: creditScore,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false
+                    }]
+                }
+            });
 
             // Show the chart modal
             document.getElementById('creditScoreModal').style.display = 'block';
@@ -382,9 +391,8 @@ creditScoreElement.forEach(element => {
     });
 });
 
-// Display Spending Analysis Modal
-const spendingAnalysisElement = document.querySelectorAll('.spendingArrow');
-spendingAnalysisElement.forEach(element => {
+// Spending Analysis Chart Display
+document.querySelectorAll('.spendingArrow').forEach(element => {
     element.addEventListener('click', async () => {
         const currentUser = auth.currentUser;
         if (!currentUser) {
@@ -399,30 +407,35 @@ spendingAnalysisElement.forEach(element => {
             const userData = docSnap.data();
             const spendingData = userData.spendingData || [100, 200, 150, 250, 300]; // Default example data
 
-            const spendingModalChart = document.getElementById('spendingModalChart');
-            if (spendingModalChart) {
-                const ctx = spendingModalChart.getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                        datasets: [{
-                            label: 'Spending ($)',
-                            data: spendingData,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+            const spendingChartElement = document.getElementById('spendingModalChart');
+
+            // Destroy the existing chart if it exists
+            if (spendingChartInstance) {
+                spendingChartInstance.destroy();
+            }
+
+            // Create a new chart
+            const ctx = spendingChartElement.getContext('2d');
+            spendingChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Spending ($)',
+                        data: spendingData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
-            }
+                }
+            });
 
             // Show the chart modal
             document.getElementById('spendingModal').style.display = 'block';
@@ -433,13 +446,22 @@ spendingAnalysisElement.forEach(element => {
 });
 
 // Close modal functionality
-const closeCreditScoreModal = document.getElementById('closeCreditScoreModal');
-const closeSpendingModal = document.getElementById('closeSpendingModal');
-
-closeCreditScoreModal.addEventListener('click', () => {
+document.getElementById('closeCreditScoreModal').addEventListener('click', () => {
     document.getElementById('creditScoreModal').style.display = 'none';
+    // Optionally destroy the chart when the modal is closed
+    if (creditScoreChartInstance) {
+        creditScoreChartInstance.destroy();
+        creditScoreChartInstance = null;
+    }
 });
 
-closeSpendingModal.addEventListener('click', () => {
+document.getElementById('closeSpendingModal').addEventListener('click', () => {
     document.getElementById('spendingModal').style.display = 'none';
+    // Optionally destroy the chart when the modal is closed
+    if (spendingChartInstance) {
+        spendingChartInstance.destroy();
+        spendingChartInstance = null;
+    }
 });
+
+
