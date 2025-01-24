@@ -613,7 +613,7 @@
                     <canvas id="creditScoreChart" width="400" height="200"></canvas>
                 </div>
             </div>
-    
+            
             <!-- Card 2 -->
             <div class="card">
                 <h2>MyLifeChecking</h2>
@@ -700,6 +700,7 @@
                 <div class="title">My Credit Score</div>
                 <div class="arrow creditArrow"><i class="fas fa-chevron-right"></i></div>
             </div>
+            
             <div class="dashboard-item">
                 <div class="icon"><i class="fas fa-chart-pie"></i></div>
                 <div class="title">Spending Analysis</div>
@@ -746,18 +747,15 @@
     <!-- Credit Score Modal -->
     <div id="creditScoreModal" class="modal">
         <div class="modal-content">
-            <span id="closeCreditScoreModal" class="close">&times;</span>
-            <h2>Credit Score Over Time</h2>
-            <canvas id="creditScoreChart" width="400" height="200"></canvas>
+            <canvas id="creditScoreModalChart" width="400" height="200"></canvas>
+            <button id="closeCreditScoreModal">Close</button>
         </div>
     </div>
-    <div id="accountsContainer"></div>
-    <!-- Spending Analysis Modal -->
+    
     <div id="spendingModal" class="modal">
         <div class="modal-content">
-            <span id="closeSpendingModal" class="close">&times;</span>
-            <h2>Spending Analysis Over Time</h2>
-            <canvas id="spendingChart" width="400" height="200"></canvas>
+            <canvas id="spendingModalChart" width="400" height="200"></canvas>
+            <button id="closeSpendingModal">Close</button>
         </div>
     </div>
 
