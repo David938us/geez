@@ -272,7 +272,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Credit Score Chart Display
-const creditScoreElement = document.querySelectorAll('.dashboard-item .title[title="My Credit Score"]');
+const creditScoreElement = document.querySelectorAll('.creditArrow');
 creditScoreElement.forEach(element => {
     element.addEventListener('click', async () => {
         const currentUser = auth.currentUser;
@@ -314,7 +314,7 @@ creditScoreElement.forEach(element => {
 });
 
 // Spending Analysis Chart Display
-const spendingAnalysisElement = document.querySelectorAll('.dashboard-item .title[title="Spending Analysis"]');
+const spendingAnalysisElement = document.querySelectorAll('.spendingArrow');
 spendingAnalysisElement.forEach(element => {
     element.addEventListener('click', async () => {
         const currentUser = auth.currentUser;
