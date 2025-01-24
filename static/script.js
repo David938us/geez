@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
+import { Chart } from "https://cdn.jsdelivr.net/npm/chart.js";
 
 
 
@@ -253,5 +253,167 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
+
+
+// + New Account Button Functionality
+const btnNewAccount = document.querySelector('.btn-new');
+btnNewAccount.addEventListener('click', async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        alert("You must be logged in to create a new account.");
+        return;
+    }
+
+    const accountName = prompt("Enter new account name:");
+    if (accountName) {
+        try {
+            const userRef = doc(db, 'users', currentUser.uid);
+            await updateDoc(userRef, {
+                accounts: arrayUnion({ name: accountName, balance: 0 })
+            });
+
+            // Refresh the page or update the UI to reflect the new account
+            fetchAccounts();
+        } catch (error) {
+            console.error("Error creating new account:", error);
+        }
+    }
+});
+
+// Function to fetch and display accounts (assumed to be in Firestore)
+async function fetchAccounts() {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        return;
+    }
+
+    const userRef = doc(db, 'users', currentUser.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const accounts = userData.accounts || [];
+
+        // Display accounts here
+        const accountsContainer = document.getElementById('accountsContainer');
+        accountsContainer.innerHTML = ''; // Clear previous content
+
+        accounts.forEach(account => {
+            const accountElement = document.createElement('div');
+            accountElement.className = 'account';
+            accountElement.innerHTML = `
+                <p>Account: ${account.name}</p>
+                <p>Balance: $${account.balance.toFixed(2)}</p>
+                <hr>
+            `;
+            accountsContainer.appendChild(accountElement);
+        });
+    } else {
+        console.error('User accounts not found');
+    }
+}
+
+// Fetch accounts on page load
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        fetchAccounts();
+    }
+});
+
+// Credit Score Chart Display
+const creditScoreElement = document.querySelector('.dashboard-item .title[title="My Credit Score"]');
+creditScoreElement.addEventListener('click', async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        alert("You must be logged in to view your credit score.");
+        return;
+    }
+
+    const userRef = doc(db, 'users', currentUser.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const creditScore = userData.creditScore || [700, 710, 720, 730, 740]; // Default example data
+
+        // Create the chart
+        const ctx = document.getElementById('creditScoreChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Credit Score',
+                    data: creditScore,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false
+                }]
+            }
+        });
+
+        // Show the chart modal
+        document.getElementById('creditScoreModal').style.display = 'block';
+    } else {
+        console.error('User data not found for credit score');
+    }
+});
+
+// Spending Analysis Chart Display
+const spendingAnalysisElement = document.querySelector('.dashboard-item .title[title="Spending Analysis"]');
+spendingAnalysisElement.addEventListener('click', async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        alert("You must be logged in to view your spending analysis.");
+        return;
+    }
+
+    const userRef = doc(db, 'users', currentUser.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const spendingData = userData.spendingData || [100, 200, 150, 250, 300]; // Default example data
+
+        // Create the chart
+        const ctx = document.getElementById('spendingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Spending ($)',
+                    data: spendingData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Show the chart modal
+        document.getElementById('spendingModal').style.display = 'block';
+    } else {
+        console.error('User data not found for spending analysis');
+    }
+});
+
+// Close modal functionality
+const closeCreditScoreModal = document.getElementById('closeCreditScoreModal');
+const closeSpendingModal = document.getElementById('closeSpendingModal');
+
+closeCreditScoreModal.addEventListener('click', () => {
+    document.getElementById('creditScoreModal').style.display = 'none';
+});
+
+closeSpendingModal.addEventListener('click', () => {
+    document.getElementById('spendingModal').style.display = 'none';
+});
 
 
