@@ -263,37 +263,6 @@ btnNewAccount.forEach(button => {
 });
 
 // Function to fetch and display accounts (assumed to be in Firestore)
-async function fetchAccounts() {
-    const currentUser = auth.currentUser;
-    if (!currentUser) {
-        return;
-    }
-
-    const userRef = doc(db, 'users', currentUser.uid);
-    const docSnap = await getDoc(userRef);
-
-    if (docSnap.exists()) {
-        const userData = docSnap.data();
-        const accounts = userData.accounts || [];
-
-        // Display accounts here
-        const accountsContainer = document.getElementById('accountsContainer');
-        accountsContainer.innerHTML = ''; // Clear previous content
-
-        accounts.forEach(account => {
-            const accountElement = document.createElement('div');
-            accountElement.className = 'account';
-            accountElement.innerHTML = `
-                <p>Account: ${account.name}</p>
-                <p>Balance: $${account.balance.toFixed(2)}</p>
-                <hr>
-            `;
-            accountsContainer.appendChild(accountElement);
-        });
-    } else {
-        console.error('User accounts not found');
-    }
-}
 
 // Fetch accounts on page load
 onAuthStateChanged(auth, async (user) => {
