@@ -272,96 +272,150 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Credit Score Chart Display
-// Function to display charts in cards
-function displayCharts() {
-    // Credit Score Chart in the card
-    const creditScoreChartElement = document.getElementById('creditScoreChart');
-    if (creditScoreChartElement) {
-        const ctx = creditScoreChartElement.getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                datasets: [{
-                    label: 'Credit Score',
-                    data: [700, 710, 720, 730, 740], // Example data
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false
-                }]
-            }
-        });
-    }
-
-    // Spending Chart in the card
-    const spendingChartElement = document.getElementById('spendingChart');
-    if (spendingChartElement) {
-        const ctx = spendingChartElement.getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                datasets: [{
-                    label: 'Spending ($)',
-                    data: [100, 200, 150, 250, 300], // Example data
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
+// Show Credit Score Chart always in the card
+const creditScoreChartElement = document.getElementById('creditScoreChart');
+if (creditScoreChartElement) {
+    const ctx = creditScoreChartElement.getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                label: 'Credit Score',
+                data: [700, 710, 720, 730, 740], // Default example data
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+            }]
+        }
+    });
 }
 
-// Show modal for credit score chart
-const creditArrow = document.querySelector('.creditArrow');
-const creditScoreModal = document.getElementById('creditScoreModal');
-const closeCreditScoreModal = document.getElementById('closeCreditScoreModal');
+// Show Spending Chart always in the card
+const spendingChartElement = document.getElementById('spendingChart');
+if (spendingChartElement) {
+    const ctx = spendingChartElement.getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                label: 'Spending ($)',
+                data: [100, 200, 150, 250, 300], // Default example data
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-creditArrow.addEventListener('click', () => {
-    creditScoreModal.style.display = 'block';
+// Display Credit Score Modal
+const creditScoreElement = document.querySelectorAll('.creditArrow');
+creditScoreElement.forEach(element => {
+    element.addEventListener('click', async () => {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            alert("You must be logged in to view your credit score.");
+            return;
+        }
+
+        const userRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(userRef);
+
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            const creditScore = userData.creditScore || [700, 710, 720, 730, 740]; // Default example data
+
+            const creditScoreModalChart = document.getElementById('creditScoreModalChart');
+            if (creditScoreModalChart) {
+                const ctx = creditScoreModalChart.getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                        datasets: [{
+                            label: 'Credit Score',
+                            data: creditScore,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: false
+                        }]
+                    }
+                });
+            }
+
+            // Show the chart modal
+            document.getElementById('creditScoreModal').style.display = 'block';
+        } else {
+            console.error('User data not found for credit score');
+        }
+    });
 });
 
-// Show modal for spending analysis chart
-const spendingArrow = document.querySelector('.spendingArrow');
-const spendingModal = document.getElementById('spendingModal');
+// Display Spending Analysis Modal
+const spendingAnalysisElement = document.querySelectorAll('.spendingArrow');
+spendingAnalysisElement.forEach(element => {
+    element.addEventListener('click', async () => {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            alert("You must be logged in to view your spending analysis.");
+            return;
+        }
+
+        const userRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(userRef);
+
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            const spendingData = userData.spendingData || [100, 200, 150, 250, 300]; // Default example data
+
+            const spendingModalChart = document.getElementById('spendingModalChart');
+            if (spendingModalChart) {
+                const ctx = spendingModalChart.getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                        datasets: [{
+                            label: 'Spending ($)',
+                            data: spendingData,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Show the chart modal
+            document.getElementById('spendingModal').style.display = 'block';
+        } else {
+            console.error('User data not found for spending analysis');
+        }
+    });
+});
+
+// Close modal functionality
+const closeCreditScoreModal = document.getElementById('closeCreditScoreModal');
 const closeSpendingModal = document.getElementById('closeSpendingModal');
 
-spendingArrow.addEventListener('click', () => {
-    spendingModal.style.display = 'block';
-});
-
-// Close modals
 closeCreditScoreModal.addEventListener('click', () => {
-    creditScoreModal.style.display = 'none';
+    document.getElementById('creditScoreModal').style.display = 'none';
 });
 
 closeSpendingModal.addEventListener('click', () => {
-    spendingModal.style.display = 'none';
+    document.getElementById('spendingModal').style.display = 'none';
 });
-
-// Function to initialize charts
-function initializeCharts() {
-    // Display the charts always in the cards on page load
-    displayCharts();
-}
-
-// Fetch user data and display charts when authenticated (if needed)
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // Add logic to fetch user data and update the chart values if necessary
-        initializeCharts();
-    }
-});
-
-// Initialize charts on page load
-window.addEventListener('DOMContentLoaded', () => {
-    initializeCharts();
-});
-
